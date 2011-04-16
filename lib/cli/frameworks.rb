@@ -13,6 +13,7 @@ module VMC::Cli
       'JavaWeb'  => ['spring',  { :mem => '512M', :description => 'Java Web Application'}],
       'Sinatra'  => ['sinatra', { :mem => '128M', :description => 'Sinatra Application'}],
       'Node'     => ['node',    { :mem => '64M',  :description => 'Node.js Application'}],
+      'wsgi'     => ['wsgi',    { :mem => '64M',  :description => 'WSGI Awesome! Python! Application'}],
     }
 
     class << self
@@ -69,6 +70,13 @@ module VMC::Cli
             # Fixme, make other files work too..
             if File.exist?('app.js') || File.exist?('index.js') || File.exist?('main.js')
               return Framework.lookup('Node')
+            end
+
+          # WSGI
+          elsif !Dir.glob('*.py').empty?
+            # Fixme, make other files work too..
+            if File.exist?('web.py') || File.exist?('index.py') || File.exist?('app.py')
+              return Framework.lookup('wsgi')
             end
           end
         end
